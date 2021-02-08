@@ -10,15 +10,15 @@ class FiltroState {
   final ResultResponse resultResponse;
 
   FiltroState({
-    this.numProvincia =  0,
-    this.codCircunscripcion = 0,
+    this.numProvincia =  -1,
+    this.codCircunscripcion = -1,
     this.codDignidad = 1,
     this.codCanton = -1,
     this.resultResponse,
   });
 
   FiltroState copyWith({
-    int numProvincia = -1,
+    int numProvincia,
     int codDignidad,
     int codCanton,
     int codCircunscripcion,

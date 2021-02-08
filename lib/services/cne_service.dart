@@ -22,10 +22,10 @@ class CneService {
 
   
   Future<ResultResponse> getVotes({
-    int numProvincia,
-    int codDignidad,
-    int codCanton,
-    int codCircunscripcion,
+    int numProvincia = -1,
+    int codDignidad = 1,
+    int codCanton = -1,
+    int codCircunscripcion = -1,
   }) async {
     try {
       final formDataMap = {
