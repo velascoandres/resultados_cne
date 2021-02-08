@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:resultados_cne/models/result_response.dart';
 
@@ -41,7 +43,9 @@ class CneService {
 
       final rawResponse = await this.dio.post(url, data: formData);
 
-      return resultResponseFromJson(rawResponse.data);
+      final response = ResultResponse.fromJson(rawResponse.data);
+
+      return response;
 
     } catch (e) {
       

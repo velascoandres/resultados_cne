@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:resultados_cne/bloc/loading/loading_bloc.dart';
 import 'package:resultados_cne/models/result_response.dart';
 import 'package:resultados_cne/services/cne_service.dart';
 
@@ -9,17 +10,18 @@ part 'filtro_event.dart';
 part 'filtro_state.dart';
 
 class FiltroBloc extends Bloc<FiltroEvent, FiltroState> {
+  final LoadingBloc loadingBloc;
+
   final CneService _cneService = new CneService();
 
-  FiltroBloc() : super(FiltroState());
+  FiltroBloc(this.loadingBloc) : super(FiltroState());
 
   CneService get cneService => this._cneService;
 
   @override
   Stream<FiltroState> mapEventToState(FiltroEvent event) async* {
     if (event is OnProvinciaChange) {
-
-      
+      loadingBloc.add(OnShowLoading());
 
       final resultResponse = await this.cneService.getVotes(
             numProvincia: event.numProvincia,
@@ -27,6 +29,8 @@ class FiltroBloc extends Bloc<FiltroEvent, FiltroState> {
             codCircunscripcion: this.state.codCircunscripcion,
             codDignidad: this.state.codDignidad,
           );
+
+      loadingBloc.add(OnHideLoading());
 
       final newState = this.state.copyWith(
             numProvincia: event.numProvincia,

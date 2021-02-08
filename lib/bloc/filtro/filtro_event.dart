@@ -10,5 +10,5 @@ class OnProvinciaChange  extends FiltroEvent {
   final int numProvincia;
 
   OnProvinciaChange(this.numProvincia);
-
 }
+
