@@ -6,6 +6,8 @@ class FiltroState {
   final int codDignidad;
   final int codCanton;
   final int codCircunscripcion;
+  final bool loading;
+  final bool error;
 
   final ResultResponse resultResponse;
 
@@ -15,6 +17,8 @@ class FiltroState {
     this.codDignidad = 1,
     this.codCanton = -1,
     this.resultResponse,
+    this.loading = false,
+    this.error = false,
   });
 
   FiltroState copyWith({
@@ -23,6 +27,8 @@ class FiltroState {
     int codCanton,
     int codCircunscripcion,
     ResultResponse resultResponse,
+    bool loading,
+    bool error,
   }) =>
       FiltroState(
         numProvincia: numProvincia ?? this.numProvincia,
@@ -30,5 +36,22 @@ class FiltroState {
         codCircunscripcion: codCircunscripcion ?? this.codCircunscripcion,
         codDignidad: codDignidad ?? this.codDignidad,
         resultResponse: resultResponse ?? this.resultResponse,
+        error: error ?? this.error,
+        loading: loading ?? this.loading,
       );
+
+
+  FiltroState startLoading(){
+   return  FiltroState(
+        loading: true,
+        error: false,
+    );
+  }
+
+  FiltroState stopLoading(){
+   return  FiltroState(
+        loading: true,
+        error: false,
+    );
+  }
 }

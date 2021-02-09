@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:resultados_cne/bloc/filtro/filtro_bloc.dart';
 import 'package:resultados_cne/pages/president_votes_page.dart';
-import 'bloc/loading/loading_bloc.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => LoadingBloc(),)
+        BlocProvider(create: (context) => FiltroBloc(),)
       ],
       child: MaterialApp(
         title: 'Material App',

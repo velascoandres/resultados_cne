@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:resultados_cne/bloc/loading/loading_bloc.dart';
 import 'package:resultados_cne/models/result_response.dart';
 import 'package:resultados_cne/services/cne_service.dart';
 
@@ -10,34 +9,42 @@ part 'filtro_event.dart';
 part 'filtro_state.dart';
 
 class FiltroBloc extends Bloc<FiltroEvent, FiltroState> {
-  final LoadingBloc loadingBloc;
-
   final CneService _cneService = new CneService();
 
-  FiltroBloc(this.loadingBloc) : super(FiltroState());
+  FiltroBloc() : super(FiltroState());
 
   CneService get cneService => this._cneService;
 
   @override
   Stream<FiltroState> mapEventToState(FiltroEvent event) async* {
     if (event is OnProvinciaChange) {
-      loadingBloc.add(OnShowLoading());
+      yield state.startLoading();
 
-      final resultResponse = await this.cneService.getVotes(
-            numProvincia: event.numProvincia,
-            codCanton: this.state.codCanton,
-            codCircunscripcion: this.state.codCircunscripcion,
-            codDignidad: this.state.codDignidad,
-          );
+      try {
+        final resultResponse = await this.cneService.getVotes(
+              numProvincia: event.numProvincia,
+              codCanton: this.state.codCanton,
+              codCircunscripcion: this.state.codCircunscripcion,
+              codDignidad: this.state.codDignidad,
+            );
 
-      loadingBloc.add(OnHideLoading());
+        final newState = this.state.copyWith(
+              numProvincia: event.numProvincia,
+              resultResponse: resultResponse,
+              loading: false,
+              error: false,
+            );
 
-      final newState = this.state.copyWith(
-            numProvincia: event.numProvincia,
-            resultResponse: resultResponse,
-          );
-
-      yield newState;
+        yield newState;
+      } catch (e) {
+        print(e);
+        yield this.state.copyWith(
+              numProvincia: event.numProvincia,
+              loading: false,
+              error: true,
+              resultResponse: ResultResponse(datos: []),
+            );
+      }
     }
   }
 }

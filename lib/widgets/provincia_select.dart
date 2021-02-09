@@ -7,28 +7,25 @@ class ProvinciaSelect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     final filtroBloc = context.read<FiltroBloc>();
 
-    return BlocBuilder<FiltroBloc, FiltroState>(builder: (context, state) {
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: DropdownButton<int>(
-          value: state.numProvincia,
-          onChanged: (int numProvincia) {
-            filtroBloc.add(OnProvinciaChange(numProvincia));
-          },
-          icon: Icon(Icons.maps_ugc_outlined),
-          items: [
-            new DropdownMenuItem(
-              value: -1,
-              child: Text('TODOS'),
-            ),
-            ...this._buildPlacesList(),
-          ],
-        ),
-      );
-    });
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10),
+      child: DropdownButton<int>(
+        value: filtroBloc.state.numProvincia,
+        onChanged: (int numProvincia) {
+          filtroBloc.add(OnProvinciaChange(numProvincia));
+        },
+        icon: Icon(Icons.maps_ugc_outlined),
+        items: [
+          new DropdownMenuItem(
+            value: -1,
+            child: Text('TODOS'),
+          ),
+          ...this._buildPlacesList(),
+        ],
+      ),
+    );
   }
 
   DropdownMenuItem<int> _buildItem(Place place) {
