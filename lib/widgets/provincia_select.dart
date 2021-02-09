@@ -16,7 +16,7 @@ class ProvinciaSelect extends StatelessWidget {
         onChanged: (int numProvincia) {
           filtroBloc.add(OnProvinciaChange(numProvincia));
         },
-        icon: Icon(Icons.maps_ugc_outlined),
+        icon: Icon(Icons.arrow_circle_down),
         items: [
           new DropdownMenuItem(
             value: -1,

@@ -18,7 +18,11 @@ class FiltroBloc extends Bloc<FiltroEvent, FiltroState> {
   @override
   Stream<FiltroState> mapEventToState(FiltroEvent event) async* {
     if (event is OnProvinciaChange) {
-      yield state.startLoading();
+      yield this.state.copyWith(
+            numProvincia: event.numProvincia,
+            loading: true,
+            error: false,
+          );
 
       try {
         final resultResponse = await this.cneService.getVotes(

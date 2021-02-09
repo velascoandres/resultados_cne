@@ -29,7 +29,6 @@ class CneService {
     int codCanton = -1,
     int codCircunscripcion = -1,
   }) async {
-    try {
       final formDataMap = {
         'request[intCodDignidad]': codDignidad,
         'request[intCodProvincia]': numProvincia,
@@ -46,12 +45,5 @@ class CneService {
       final response = ResultResponse.fromJson(rawResponse.data);
 
       return response;
-
-    } catch (e) {
-      
-      print(e);
-      
-      return ResultResponse(datos: []);
-    }
   }
 }
