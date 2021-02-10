@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pie_chart/pie_chart.dart';
+
 import 'package:resultados_cne/bloc/filtro/filtro_bloc.dart';
 import 'package:resultados_cne/helpers/helpers.dart';
 import 'package:resultados_cne/models/result_response.dart';
 import 'package:resultados_cne/widgets/widgets.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 
 class PresidentVotesPage extends StatelessWidget {
   @override
@@ -32,9 +33,8 @@ class PresidentVotesPage extends StatelessWidget {
                       ? _Loader()
                       : _ChartBar(
                           collection: state.resultResponse.datos,
-                          domainFn: (Dato dato, _) => dato.strNomCandidato,
-                          measureFn: (Dato dato, _) => dato.intVotos,
-                          labelFn: (Dato dato, _) => '${dato.intVotos}',
+                          domainFn: (Dato dato) =>
+                              [dato.strNomCandidato, dato.intVotos],
                         ),
                 ],
               ),
@@ -50,41 +50,56 @@ class _ChartBar<T> extends StatelessWidget {
   final List<T> collection;
 
   final Function domainFn;
-  final Function measureFn;
-  final Function labelFn;
 
   _ChartBar({
     @required this.collection,
     @required this.domainFn,
-    @required this.measureFn,
-    @required this.labelFn,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-      width: double.infinity,
-      height: 500,
-      child: new charts.BarChart(
-        this._createSeries(),
-        animate: true,
-        vertical: false,
+    final dataMap = this._createSeries();
+
+    return Center(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        width: double.infinity,
+        height: 550,
+        child: dataMap.isNotEmpty
+            ? PieChart(
+                dataMap: dataMap,
+                animationDuration: Duration(milliseconds: 800),
+                chartLegendSpacing: 12,
+                chartRadius: 200,
+                initialAngleInDegree: 0,
+                chartType: ChartType.ring,
+                legendOptions: LegendOptions(
+                  legendPosition: LegendPosition.bottom,
+                  showLegends: true,
+                ),
+                chartValuesOptions: ChartValuesOptions(
+                  showChartValuesInPercentage: true,
+                  decimalPlaces: 2,
+                  showChartValuesOutside: true,
+                ),
+              )
+            : Container(),
       ),
     );
   }
 
-  List<charts.Series<T, String>> _createSeries() {
-    final data = this.collection;
-    return [
-      new charts.Series<T, String>(
-        id: 'presidentVotes',
-        domainFn: this.domainFn,
-        measureFn: this.measureFn,
-        data: data,
-        labelAccessorFn: this.labelFn,
-      )
-    ];
+  Map<String, double> _createSeries() {
+    Map<String, double> dataMap = new Map();
+    return this.collection.fold(
+      dataMap,
+      (Map acc, T dato) {
+        final tuple = this.domainFn(dato);
+        final x = tuple[0];
+        final int y = tuple[1];
+        acc.putIfAbsent(x, () => y.toDouble());
+        return acc;
+      },
+    );
   }
 }
 

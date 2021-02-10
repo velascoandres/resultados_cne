@@ -2620,20 +2620,4 @@ const PROVINCIAS = {
       }
     }
   },
-  "90": {
-    "cantones": {
-      "9001": {
-        "canton": "LAS GOLONDRINAS",
-        "parroquias": null
-      },
-      "9003": {
-        "canton": "MANGA DEL CURA",
-        "parroquias": null
-      },
-      "9004": {
-        "canton": "EL PIEDRERO",
-        "parroquias": null
-      }
-    }
-  }
 };
