@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => FiltroBloc(),)
+        BlocProvider(create: (context) => FiltroBloc()..add(OnProvinciaChange(-1)),)
       ],
       child: MaterialApp(
         title: 'Material App',

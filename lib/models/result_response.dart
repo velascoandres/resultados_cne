@@ -9,15 +9,16 @@ ResultResponse resultResponseFromJson(String str) => ResultResponse.fromJson(jso
 String resultResponseToJson(ResultResponse data) => json.encode(data.toJson());
 
 class ResultResponse {
-    ResultResponse({
+
+    const ResultResponse({
         this.datos,
         this.fechaCorte,
         this.conInformacion,
     });
 
-    List<Dato> datos;
-    String fechaCorte;
-    bool conInformacion;
+    final List<Dato> datos;
+    final String fechaCorte;
+    final bool conInformacion;
 
     factory ResultResponse.fromJson(Map<String, dynamic> json) => ResultResponse(
         datos: List<Dato>.from(json["datos"].map((x) => Dato.fromJson(x))),

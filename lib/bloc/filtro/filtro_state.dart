@@ -1,5 +1,7 @@
 part of 'filtro_bloc.dart';
 
+
+
 @immutable
 class FiltroState {
   final int numProvincia;
@@ -11,12 +13,12 @@ class FiltroState {
 
   final ResultResponse resultResponse;
 
-  FiltroState({
+   FiltroState({
     this.numProvincia =  -1,
     this.codCircunscripcion = -1,
     this.codDignidad = 1,
     this.codCanton = -1,
-    this.resultResponse,
+    this.resultResponse =  const ResultResponse(datos: []),
     this.loading = false,
     this.error = false,
   });

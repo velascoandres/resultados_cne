@@ -1,9 +1,8 @@
 part of 'widgets.dart';
 
 class ProvinciaSelect extends StatelessWidget {
-  final Function onSelected;
 
-  const ProvinciaSelect({@required this.onSelected});
+  const ProvinciaSelect();
 
   @override
   Widget build(BuildContext context) {
