@@ -22,7 +22,15 @@ class PresidentVotesPage extends StatelessWidget {
         final isLoading = state.loading;
         return Scaffold(
           key: scaffoldKey,
-          appBar: AppBar(title: Text('Resultados Actuales')),
+          appBar: AppBar(
+            title: Text('Resultados Actuales'),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.refresh),
+                onPressed: () => BlocProvider.of<FiltroBloc>(context).add(OnRefresh()),
+              ),
+            ],
+          ),
           body: Container(
             child: SingleChildScrollView(
               child: Column(
@@ -55,12 +63,15 @@ class _Loader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height / 3),
+      padding: EdgeInsets.symmetric(
+          vertical: MediaQuery.of(context).size.height / 3),
       child: Center(
         child: Column(
           children: [
             CircularProgressIndicator(),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Text('Cargando datos...')
           ],
         ),

@@ -49,6 +49,35 @@ class FiltroBloc extends Bloc<FiltroEvent, FiltroState> {
               resultResponse: ResultResponse(datos: []),
             );
       }
+    } else if (event is OnRefresh) {
+      yield this.state.copyWith(
+            loading: true,
+            error: false,
+          );
+      try {
+        final resultResponse = await this.cneService.getVotes(
+              numProvincia: this.state.numProvincia,
+              codCanton: this.state.codCanton,
+              codCircunscripcion: this.state.codCircunscripcion,
+              codDignidad: this.state.codDignidad,
+            );
+
+        final newState = this.state.copyWith(
+              numProvincia: this.state.numProvincia,
+              resultResponse: resultResponse,
+              loading: false,
+              error: false,
+            );
+
+        yield newState;
+      } catch (e) {
+        print(e);
+        yield this.state.copyWith(
+              loading: false,
+              error: true,
+              resultResponse: ResultResponse(datos: []),
+            );
+      }
     }
   }
 }

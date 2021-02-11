@@ -5,6 +5,9 @@ abstract class FiltroEvent {}
 
 
 
+
+
+
 class OnProvinciaChange  extends FiltroEvent {
 
   final int numProvincia;
@@ -12,3 +15,5 @@ class OnProvinciaChange  extends FiltroEvent {
   OnProvinciaChange(this.numProvincia);
 }
 
+
+class OnRefresh  extends FiltroEvent {}
