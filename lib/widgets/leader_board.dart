@@ -41,7 +41,7 @@ class LeaderBoard extends StatelessWidget {
               color: Colors.redAccent,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Text('Top $deepLevel de candidatos'),
+            child: Text('Top $deepLevel de candidatos', style: TextStyle(fontWeight: FontWeight.bold),),
           ),
         ),
       ]),
