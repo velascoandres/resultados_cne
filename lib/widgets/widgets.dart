@@ -5,6 +5,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:resultados_cne/bloc/filtro/filtro_bloc.dart';
 import 'package:resultados_cne/mocks/provincias.dart';
 import 'package:resultados_cne/models/place.dart';
+import 'package:resultados_cne/models/result_response.dart';
 
 part 'provincia_select.dart';
 part 'custom_bar_chart.dart';
+part 'leader_board.dart';

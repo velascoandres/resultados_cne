@@ -20,6 +20,8 @@ class PresidentVotesPage extends StatelessWidget {
       },
       builder: (context, state) {
         final isLoading = state.loading;
+        final datos = state.resultResponse.datos;
+
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
@@ -27,7 +29,8 @@ class PresidentVotesPage extends StatelessWidget {
             actions: [
               IconButton(
                 icon: Icon(Icons.refresh),
-                onPressed: () => BlocProvider.of<FiltroBloc>(context).add(OnRefresh()),
+                onPressed: () =>
+                    BlocProvider.of<FiltroBloc>(context).add(OnRefresh()),
               ),
             ],
           ),
@@ -38,14 +41,26 @@ class PresidentVotesPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ProvinciaSelect(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  LeaderBoard(
+                    collection: datos,
+                    deepLevel: 3,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   isLoading
                       ? _Loader()
                       : CustomBarChart(
-                          collection: state.resultResponse.datos,
+                          collection: datos,
                           getTitlesFn: (Dato dato) => dato.strNomCandidato,
                           getValuesFn: (Dato dato) => dato.intVotos,
-                          total: state.resultResponse.datos.fold<int>(
-                              0, (int acc, Dato dato) => acc + dato.intVotos),
+                          total: datos.fold<int>(
+                            0,
+                            (int acc, Dato dato) => acc + dato.intVotos,
+                          ),
                         ),
                 ],
               ),
