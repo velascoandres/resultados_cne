@@ -31,73 +31,18 @@ class PresidentVotesPage extends StatelessWidget {
                   ProvinciaSelect(),
                   isLoading
                       ? _Loader()
-                      : _ChartBar(
+                      : CustomBarChart(
                           collection: state.resultResponse.datos,
-                          domainFn: (Dato dato) =>
-                              [dato.strNomCandidato, dato.intVotos],
+                          getTitlesFn: (Dato dato) => dato.strNomCandidato,
+                          getValuesFn: (Dato dato) => dato.intVotos,
+                          total: state.resultResponse.datos.fold<int>(
+                              0, (int acc, Dato dato) => acc + dato.intVotos),
                         ),
                 ],
               ),
             ),
           ),
         );
-      },
-    );
-  }
-}
-
-class _ChartBar<T> extends StatelessWidget {
-  final List<T> collection;
-
-  final Function domainFn;
-
-  _ChartBar({
-    @required this.collection,
-    @required this.domainFn,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final dataMap = this._createSeries();
-
-    return Center(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-        width: double.infinity,
-        height: 550,
-        child: dataMap.isNotEmpty
-            ? PieChart(
-                dataMap: dataMap,
-                animationDuration: Duration(milliseconds: 800),
-                chartLegendSpacing: 12,
-                chartRadius: 200,
-                initialAngleInDegree: 0,
-                chartType: ChartType.ring,
-                legendOptions: LegendOptions(
-                  legendPosition: LegendPosition.bottom,
-                  showLegends: true,
-                ),
-                chartValuesOptions: ChartValuesOptions(
-                  showChartValuesInPercentage: true,
-                  decimalPlaces: 2,
-                  showChartValuesOutside: true,
-                ),
-              )
-            : Container(),
-      ),
-    );
-  }
-
-  Map<String, double> _createSeries() {
-    Map<String, double> dataMap = new Map();
-    return this.collection.fold(
-      dataMap,
-      (Map acc, T dato) {
-        final tuple = this.domainFn(dato);
-        final x = tuple[0];
-        final int y = tuple[1];
-        acc.putIfAbsent(x, () => y.toDouble());
-        return acc;
       },
     );
   }
