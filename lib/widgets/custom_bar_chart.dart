@@ -116,14 +116,20 @@ class CustomBarChartState extends State<CustomBarChart> {
     return BarChartData(
       barTouchData: BarTouchData(
         touchTooltipData: BarTouchTooltipData(
+          tooltipBottomMargin: 20,
+          fitInsideVertically: true,
+          tooltipPadding: EdgeInsets.all(20),
           tooltipBgColor: Colors.blueGrey,
           getTooltipItem: (group, groupIndex, rod, rodIndex) {
             final data = widget.collection[groupIndex];
             final value = widget.getValuesFn(data);
 
             final percent = (value * 100 )/ widget.total;
-            return BarTooltipItem(
-                percent.toStringAsFixed(2) + ' %',
+            final percentFixed = percent.toStringAsFixed(2);
+
+            final title = widget.getTitlesFn(data);
+
+            return BarTooltipItem( '$percentFixed % \n  $title' ,
                 TextStyle(color: Colors.yellow));
           },
         ),
