@@ -27,6 +27,8 @@ class PresidentVotesPage extends StatelessWidget {
           body: Container(
             child: SingleChildScrollView(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ProvinciaSelect(),
                   isLoading
@@ -53,9 +55,16 @@ class _Loader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        child: CircularProgressIndicator(),
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height / 3),
+      child: Center(
+        child: Column(
+          children: [
+            CircularProgressIndicator(),
+            SizedBox(height: 20,),
+            Text('Cargando datos...')
+          ],
+        ),
       ),
     );
   }
