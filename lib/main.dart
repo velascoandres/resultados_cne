@@ -10,11 +10,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => FiltroBloc()..add(OnProvinciaChange(-1)),)
+        BlocProvider(
+          create: (context) => FiltroBloc()..add(OnProvinciaChange(-1)),
+        )
       ],
       child: MaterialApp(
         title: 'Material App',
         debugShowCheckedModeBanner: false,
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          // other properties...
+        ),
+        themeMode: ThemeMode.dark,
         initialRoute: 'president-votes',
         routes: {
           'president-votes': (_) => PresidentVotesPage(),

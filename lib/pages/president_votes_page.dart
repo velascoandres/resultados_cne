@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pie_chart/pie_chart.dart';
 
 import 'package:resultados_cne/bloc/filtro/filtro_bloc.dart';
 import 'package:resultados_cne/helpers/helpers.dart';
@@ -23,7 +22,7 @@ class PresidentVotesPage extends StatelessWidget {
         final isLoading = state.loading;
         return Scaffold(
           key: scaffoldKey,
-          appBar: AppBar(title: Text('Resultados Actuales Presidente')),
+          appBar: AppBar(title: Text('Resultados Actuales')),
           body: Container(
             child: SingleChildScrollView(
               child: Column(

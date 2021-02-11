@@ -30,7 +30,11 @@ class CustomBarChart<T> extends StatefulWidget {
   final int total;
 
   CustomBarChart(
-      {Key key, this.collection, this.getTitlesFn, this.getValuesFn, this.total})
+      {Key key,
+      this.collection,
+      this.getTitlesFn,
+      this.getValuesFn,
+      this.total})
       : super(key: key);
 
   @override
@@ -119,18 +123,18 @@ class CustomBarChartState extends State<CustomBarChart> {
           tooltipBottomMargin: 20,
           fitInsideVertically: true,
           tooltipPadding: EdgeInsets.all(20),
-          tooltipBgColor: Colors.blueGrey,
+          tooltipBgColor: Colors.black54,
           getTooltipItem: (group, groupIndex, rod, rodIndex) {
             final data = widget.collection[groupIndex];
             final value = widget.getValuesFn(data);
 
-            final percent = (value * 100 )/ widget.total;
+            final percent = (value * 100) / widget.total;
             final percentFixed = percent.toStringAsFixed(2);
 
             final title = widget.getTitlesFn(data);
 
-            return BarTooltipItem( '$percentFixed % \n  $title' ,
-                TextStyle(color: Colors.yellow));
+            return BarTooltipItem(
+                '$percentFixed % \n  $title', TextStyle(color: Colors.white));
           },
         ),
         touchCallback: (barTouchResponse) {
@@ -150,7 +154,12 @@ class CustomBarChartState extends State<CustomBarChart> {
         bottomTitles: SideTitles(
           showTitles: true,
           rotateAngle: 90,
-          getTextStyles: (value) => TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 11),
+          getTextStyles: (value) => TextStyle(
+        
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 11,
+          ),
           margin: 2,
           getTitles: (double value) {
             final index = value.toInt();
