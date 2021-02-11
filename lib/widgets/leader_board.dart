@@ -1,23 +1,39 @@
 part of 'widgets.dart';
 
-class LeaderBoard extends StatelessWidget {
+class LeaderBoard extends StatefulWidget {
   final List<Dato> collection;
   final int deepLevel;
 
+  LeaderBoard({@required this.collection, this.deepLevel = 3});
+
+  @override
+  _LeaderBoardState createState() => _LeaderBoardState();
+}
+
+class _LeaderBoardState extends State<LeaderBoard> {
   int _totalVotes;
   List<Dato> _orderedCollection;
 
-  LeaderBoard({@required this.collection, this.deepLevel = 3}) {
-    _orderedCollection = [...this.collection];
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void _filterData() {
+    _orderedCollection = [...widget.collection];
     _orderedCollection.sort((a, b) => b.intVotos.compareTo(a.intVotos));
     _totalVotes = this._orderedCollection.fold<int>(
           0,
           (int acc, Dato dato) => acc + dato.intVotos,
         );
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+
+    this._filterData();
+
     return AspectRatio(
       aspectRatio: 2,
       child: Stack(children: [
@@ -27,7 +43,7 @@ class LeaderBoard extends StatelessWidget {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             child: ListView.builder(
-              itemCount: deepLevel,
+              itemCount: widget.deepLevel,
               itemBuilder: _buildLeaderItem,
             ),
           ),
@@ -41,7 +57,10 @@ class LeaderBoard extends StatelessWidget {
               color: Colors.redAccent,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Text('Top $deepLevel de candidatos', style: TextStyle(fontWeight: FontWeight.bold),),
+            child: Text(
+              'Top ${widget.deepLevel} de candidatos',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
         ),
       ]),
@@ -49,9 +68,10 @@ class LeaderBoard extends StatelessWidget {
   }
 
   Widget _buildLeaderItem(BuildContext _, int positionIndex) {
-    final candidate = this._orderedCollection[positionIndex];
+    final candidate = _orderedCollection[positionIndex];
 
-    final percent = (candidate.intVotos * 100 / _totalVotes).toStringAsFixed(2);
+    final percent =
+        (candidate.intVotos * 100 / _totalVotes).toStringAsFixed(2);
 
     return ListTile(
       leading: Text('${candidate.strNomCandidato}'),

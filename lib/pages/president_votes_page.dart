@@ -44,10 +44,12 @@ class PresidentVotesPage extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  LeaderBoard(
-                    collection: datos,
-                    deepLevel: 3,
-                  ),
+                  isLoading
+                      ? Container()
+                      : LeaderBoard(
+                          collection: datos,
+                          deepLevel: 3,
+                        ),
                   SizedBox(
                     height: 20,
                   ),
