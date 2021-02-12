@@ -36,7 +36,9 @@ class _LeaderBoardState extends State<LeaderBoard> {
     return AspectRatio(
       aspectRatio: 2,
       child: Stack(
-        children: hasData ? _buildLeaderBoardContent(context) : this._buildNotContent(context),
+        children: hasData
+            ? _buildLeaderBoardContent(context)
+            : this._buildNotContent(context),
       ),
     );
   }
@@ -64,6 +66,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           child: ListView.builder(
+            physics: BouncingScrollPhysics(),
             itemCount: widget.collection.length > 0 ? widget.deepLevel : 0,
             itemBuilder: _buildLeaderItem,
           ),
