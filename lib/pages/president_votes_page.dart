@@ -55,7 +55,7 @@ class _PresidentVotesPageState extends State<PresidentVotesPage>
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ProvinciaSelect(),
-                  isProvinciaSelected ? CantonSelect() : Container(),
+                  // isProvinciaSelected ? CantonSelect() : Container(),
                   SizedBox(
                     height: 20,
                   ),
