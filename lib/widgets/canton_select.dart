@@ -1,11 +1,10 @@
 part of 'widgets.dart';
 
-class ProvinciaSelect extends StatelessWidget {
+class CantonSelect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     final filtroBloc = context.read<FiltroBloc>();
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -16,19 +15,19 @@ class ProvinciaSelect extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 8),
           child: DropdownButton<int>(
             underline: SizedBox(),
-            value: filtroBloc.state.numProvincia,
-            onChanged: (int numProvincia) {
-              filtroBloc.add(OnProvinciaChange(numProvincia));
+            value: filtroBloc.state.codCanton,
+            onChanged: (int codCanton) {
+              filtroBloc.add(OnCantonChange(codCanton));
             },
             icon: Icon(Icons.arrow_drop_down),
-            hint: Text('Selecciona una provincia'),
+            hint: Text('Selecciona un canton'),
             isExpanded: true,
             items: [
               new DropdownMenuItem(
                 value: -1,
-                child: Text('Todas las provincias'),
+                child: Text('Todos los cantones'),
               ),
-              ...this._buildPlacesList(),
+              ...this._buildPlacesList(filtroBloc.state.numProvincia),
             ],
           ),
         ),
@@ -42,12 +41,14 @@ class ProvinciaSelect extends StatelessWidget {
     );
   }
 
-  List<DropdownMenuItem<int>> _buildPlacesList() {
-    return PROVINCIAS.keys.map(
+  List<DropdownMenuItem<int>> _buildPlacesList(int numProvincia) {
+    final provincia = PROVINCIAS[numProvincia.toString()]; 
+    final Map cantonesMap = provincia['cantones'];
+    return cantonesMap.keys.map(
       (key) {
-        final value = PROVINCIAS[key];
-        final provinciaName = value['provincia'];
-        final place = Place(code: int.parse(key), name: provinciaName);
+        final value = cantonesMap[key];
+        final cantonName = value['canton'];
+        final place = Place(code: int.parse(key), name: cantonName);
         return this._buildItem(place);
       },
     ).toList();

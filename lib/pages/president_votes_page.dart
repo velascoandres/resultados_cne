@@ -21,7 +21,7 @@ class PresidentVotesPage extends StatelessWidget {
       builder: (context, state) {
         final isLoading = state.loading;
         final datos = state.resultResponse.datos;
-
+        final isProvinciaSelected = state.numProvincia != -1;
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
@@ -41,6 +41,7 @@ class PresidentVotesPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ProvinciaSelect(),
+                  isProvinciaSelected ? CantonSelect() : Container(),
                   SizedBox(
                     height: 20,
                   ),

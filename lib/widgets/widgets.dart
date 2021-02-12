@@ -10,3 +10,4 @@ import 'package:resultados_cne/models/result_response.dart';
 part 'provincia_select.dart';
 part 'custom_bar_chart.dart';
 part 'leader_board.dart';
+part 'canton_select.dart';

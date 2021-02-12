@@ -16,4 +16,12 @@ class OnProvinciaChange  extends FiltroEvent {
 }
 
 
+class OnCantonChange  extends FiltroEvent {
+
+  final int codCanton;
+
+  OnCantonChange(this.codCanton);
+}
+
+
 class OnRefresh  extends FiltroEvent {}
