@@ -56,14 +56,10 @@ class PresidentVotesPage extends StatelessWidget {
                   ),
                   isLoading
                       ? _Loader()
-                      : CustomBarChart(
+                      : CustomPieChart(
                           collection: datos,
                           getTitlesFn: (Dato dato) => dato.strNomCandidato,
                           getValuesFn: (Dato dato) => dato.intVotos,
-                          total: datos.fold<int>(
-                            0,
-                            (int acc, Dato dato) => acc + dato.intVotos,
-                          ),
                         ),
                 ],
               ),

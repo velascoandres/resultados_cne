@@ -1,53 +1,32 @@
 part of 'widgets.dart';
 
 class CustomBarChart<T> extends StatefulWidget {
-  final List<Color> availableColors = [
-    Colors.purpleAccent,
-    Colors.yellow,
-    Colors.lightBlue,
-    Colors.orange,
-    Colors.pink,
-    Colors.redAccent,
-    Colors.deepPurpleAccent,
-    Colors.amberAccent,
-    Colors.cyan,
-    Colors.deepOrange,
-    Colors.indigo,
-    Colors.lightGreen,
-    Colors.lime,
-    Colors.teal,
-    Colors.tealAccent,
-    Colors.pinkAccent,
-    Colors.lightBlueAccent,
-    Colors.brown,
-  ];
-
   final List<T> collection;
 
   final Function getTitlesFn;
   final Function getValuesFn;
 
-  final int total;
-
-  CustomBarChart(
-      {Key key,
-      this.collection,
-      this.getTitlesFn,
-      this.getValuesFn,
-      this.total})
-      : super(key: key);
+  CustomBarChart({
+    Key key,
+    this.collection,
+    this.getTitlesFn,
+    this.getValuesFn,
+  }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => CustomBarChartState();
+  State<StatefulWidget> createState() => CustomBarChartState<T>();
 }
 
-class CustomBarChartState extends State<CustomBarChart> {
+class CustomBarChartState<T> extends State<CustomBarChart> {
   final Color barBackgroundColor = const Color(0xff72d8bf);
   final Duration animDuration = const Duration(milliseconds: 250);
 
   int touchedIndex;
 
   bool isPlaying = false;
+
+  get total => widget.collection
+      .fold<int>(0, (int acc, dato) => acc + widget.getValuesFn(dato));
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +89,7 @@ class CustomBarChartState extends State<CustomBarChart> {
         (data) {
           final int y = widget.getValuesFn(data.value);
           final int x = data.key;
-          final barColor = widget.availableColors[x];
+          final barColor = AVALAIBLE_COLORS[x];
           return makeGroupData(x, y.toDouble(),
               isTouched: x == touchedIndex, barColor: barColor);
         },
@@ -128,7 +107,7 @@ class CustomBarChartState extends State<CustomBarChart> {
             final data = widget.collection[groupIndex];
             final value = widget.getValuesFn(data);
 
-            final percent = (value * 100) / widget.total;
+            final percent = (value * 100) / total;
             final percentFixed = percent.toStringAsFixed(2);
 
             final title = widget.getTitlesFn(data);
@@ -155,7 +134,6 @@ class CustomBarChartState extends State<CustomBarChart> {
           showTitles: true,
           rotateAngle: 90,
           getTextStyles: (value) => TextStyle(
-        
             color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 11,
