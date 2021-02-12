@@ -74,20 +74,21 @@ class CustomPierChartState extends State<CustomPieChart> {
     return collectionMap.keys.map(
       (dataKey) {
         final isTouched = dataKey == touchedIndex;
-        final double fontSize = isTouched ? 25 : 16;
-        final double radius = isTouched ? 60 : 50;
+        final double fontSize = isTouched ? 15 : 14;
+        final double radius = isTouched ? 70 : 60;
         final data = collectionMap[dataKey];
+        final title = this.widget.getTitlesFn(data);
         final value = this.widget.getValuesFn(data).toDouble();
         final percent = ((value * 100) / total).toStringAsFixed(2);
         return PieChartSectionData(
           color: AVALAIBLE_COLORS[dataKey],
           value: value,
-          title: '$percent %',
+          title: isTouched ? '$percent % \n $title' :  '$percent %',
           radius: radius,
           titleStyle: TextStyle(
             fontSize: fontSize,
             fontWeight: FontWeight.bold,
-            color: isTouched ? Colors.white : Colors.black
+            color: Colors.white
           ),
         );
       },

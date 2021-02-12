@@ -132,7 +132,7 @@ class CustomBarChartState<T> extends State<CustomBarChart> {
         show: true,
         bottomTitles: SideTitles(
           showTitles: true,
-          rotateAngle: 90,
+          rotateAngle: 0,
           getTextStyles: (value) => TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,

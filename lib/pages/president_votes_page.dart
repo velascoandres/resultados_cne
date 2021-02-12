@@ -72,12 +72,16 @@ class _PresidentVotesPageState extends State<PresidentVotesPage>
                   TabBar(
                     controller: _tabController,
                     tabs: [
-                      Tab(icon: Icon(Icons.bar_chart_outlined)),
                       Tab(icon: Icon(Icons.pie_chart_outline_outlined)),
+                      Tab(icon: Icon(Icons.bar_chart_outlined)),
                     ],
                   ),
 
-                  isLoading ? _Loader() : _buildTabs(filterReduceResultCollection(datos: datos, top: 3)),
+                  isLoading
+                      ? _Loader()
+                      : _buildTabs(
+                          filterReduceResultCollection(datos: datos, top: 3),
+                        ),
                 ],
               ),
             ),
@@ -93,14 +97,14 @@ class _PresidentVotesPageState extends State<PresidentVotesPage>
       child: TabBarView(
         controller: _tabController,
         children: [
-          CustomBarChart(
+          CustomPieChart(
             collection: datos,
             getTitlesFn: (Dato dato) => dato.strNomCandidato,
             getValuesFn: (Dato dato) => dato.intVotos,
           ),
-          CustomPieChart(
+          CustomBarChart(
             collection: datos,
-            getTitlesFn: (Dato dato) => dato.strNomCandidato,
+            getTitlesFn: (Dato dato) => dato.strNomCandidato.split(' ')[1],
             getValuesFn: (Dato dato) => dato.intVotos,
           ),
         ],

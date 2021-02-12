@@ -18,7 +18,7 @@ List<Dato> filterReduceResultCollection({
   int restTotal =
       restCollection.fold(0, (acc, candidato) => acc + candidato.intVotos);
 
-  final otros = Dato(intVotos: restTotal, strNomCandidato: 'RESTO');
+  final otros = Dato(intVotos: restTotal, strNomCandidato: ' RESTO');
 
   return [
     ...topCollection,

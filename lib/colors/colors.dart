@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const List<Color> AVALAIBLE_COLORS = [
     Colors.purpleAccent,
-    Colors.yellow,
+    Colors.indigo,
     Colors.lightBlue,
     Colors.orange,
     Colors.pink,
