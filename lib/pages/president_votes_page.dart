@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:resultados_cne/bloc/filtro/filtro_bloc.dart';
+import 'package:resultados_cne/functions/filter_map.dart';
 import 'package:resultados_cne/helpers/helpers.dart';
 import 'package:resultados_cne/models/result_response.dart';
 import 'package:resultados_cne/widgets/widgets.dart';
@@ -76,7 +77,7 @@ class _PresidentVotesPageState extends State<PresidentVotesPage>
                     ],
                   ),
 
-                  isLoading ? _Loader() : _buildTabs(datos),
+                  isLoading ? _Loader() : _buildTabs(filterReduceResultCollection(datos: datos, top: 3)),
                 ],
               ),
             ),
