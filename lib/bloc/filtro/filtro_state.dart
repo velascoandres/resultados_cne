@@ -45,6 +45,10 @@ class FiltroState {
 
   FiltroState startLoading(){
    return  FiltroState(
+     numProvincia: this.numProvincia,
+        codCanton: this.codCanton,
+        codCircunscripcion: this.codCircunscripcion,
+        codDignidad: this.codDignidad,
         loading: true,
         error: false,
     );
