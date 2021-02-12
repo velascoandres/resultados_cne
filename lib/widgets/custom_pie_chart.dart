@@ -22,39 +22,35 @@ class CustomPierChartState extends State<CustomPieChart> {
   @override
   Widget build(BuildContext context) {
   
-      return Column(
-
-        children: <Widget>[
-          PieChart(
-                PieChartData(
-                  pieTouchData: PieTouchData(touchCallback: (pieTouchResponse) {
-                    setState(() {
-                      if (pieTouchResponse.touchInput is FlLongPressEnd ||
-                          pieTouchResponse.touchInput is FlPanEnd) {
-                        touchedIndex = -1;
-                      } else {
-                        touchedIndex = pieTouchResponse.touchedSectionIndex;
-                      }
-                    });
-                  }),
-                  borderData: FlBorderData(
-                    show: false,
+      return SingleChildScrollView(
+              child: Column(
+          children: <Widget>[
+            PieChart(
+                  PieChartData(
+                    pieTouchData: PieTouchData(touchCallback: (pieTouchResponse) {
+                      setState(() {
+                        if (pieTouchResponse.touchInput is FlLongPressEnd ||
+                            pieTouchResponse.touchInput is FlPanEnd) {
+                          touchedIndex = -1;
+                        } else {
+                          touchedIndex = pieTouchResponse.touchedSectionIndex;
+                        }
+                      });
+                    }),
+                    borderData: FlBorderData(
+                      show: false,
+                    ),
+                    sectionsSpace: 0,
+                    centerSpaceRadius: 40,
+                    sections: showingSections(),
                   ),
-                  sectionsSpace: 0,
-                  centerSpaceRadius: 40,
-                  sections: showingSections(),
                 ),
-              ),
-          Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: _buildIndicators(),
-          ),
-          const SizedBox(
-            width: 28,
-          ),
-        ],
+            ..._buildIndicators(),
+            const SizedBox(
+              width: 28,
+            ),
+          ],
+        ),
       );
   }
 
@@ -82,10 +78,7 @@ class CustomPierChartState extends State<CustomPieChart> {
         final double radius = isTouched ? 60 : 50;
         final data = collectionMap[dataKey];
         final value = this.widget.getValuesFn(data).toDouble();
-        print(value);
-        print(data);
         final percent = ((value * 100) / total).toStringAsFixed(2);
-        print(percent);
         return PieChartSectionData(
           color: AVALAIBLE_COLORS[dataKey],
           value: value,

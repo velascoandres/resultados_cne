@@ -6,7 +6,21 @@ import 'package:resultados_cne/helpers/helpers.dart';
 import 'package:resultados_cne/models/result_response.dart';
 import 'package:resultados_cne/widgets/widgets.dart';
 
-class PresidentVotesPage extends StatelessWidget {
+class PresidentVotesPage extends StatefulWidget {
+  @override
+  _PresidentVotesPageState createState() => _PresidentVotesPageState();
+}
+
+class _PresidentVotesPageState extends State<PresidentVotesPage>
+    with SingleTickerProviderStateMixin {
+  TabController _tabController;
+
+  @override
+  void initState() {
+    _tabController = new TabController(length: 2, vsync: this);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -54,19 +68,42 @@ class PresidentVotesPage extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  isLoading
-                      ? _Loader()
-                      : CustomPieChart(
-                          collection: datos,
-                          getTitlesFn: (Dato dato) => dato.strNomCandidato,
-                          getValuesFn: (Dato dato) => dato.intVotos,
-                        ),
+                  TabBar(
+                    controller: _tabController,
+                    tabs: [
+                      Tab(icon: Icon(Icons.bar_chart_outlined)),
+                      Tab(icon: Icon(Icons.pie_chart_outline_outlined)),
+                    ],
+                  ),
+
+                  isLoading ? _Loader() : _buildTabs(datos),
                 ],
               ),
             ),
           ),
         );
       },
+    );
+  }
+
+  Widget _buildTabs(List<Dato> datos) {
+    return Container(
+      height: MediaQuery.of(context).size.height / 2,
+      child: TabBarView(
+        controller: _tabController,
+        children: [
+          CustomBarChart(
+            collection: datos,
+            getTitlesFn: (Dato dato) => dato.strNomCandidato,
+            getValuesFn: (Dato dato) => dato.intVotos,
+          ),
+          CustomPieChart(
+            collection: datos,
+            getTitlesFn: (Dato dato) => dato.strNomCandidato,
+            getValuesFn: (Dato dato) => dato.intVotos,
+          ),
+        ],
+      ),
     );
   }
 }
