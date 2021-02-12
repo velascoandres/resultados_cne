@@ -45,8 +45,8 @@ class ProvinciaSelect extends StatelessWidget {
   List<DropdownMenuItem<int>> _buildPlacesList() {
     return PROVINCIAS.keys.map(
       (key) {
-        final value = PROVINCIAS[key];
-        final provinciaName = value['provincia'];
+        final provinciaMap = PROVINCIAS[key];
+        final provinciaName = provinciaMap['provincia'];
         final place = Place(code: int.parse(key), name: provinciaName);
         return this._buildItem(place);
       },

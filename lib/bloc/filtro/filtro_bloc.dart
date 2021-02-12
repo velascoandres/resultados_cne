@@ -21,50 +21,29 @@ class FiltroBloc extends Bloc<FiltroEvent, FiltroState> {
       yield* this._onProvinciaChange(event);
     } else if (event is OnRefresh) {
       yield* this._onRefresh(event);
-    } else if (event is OnCantonChange){
+    } else if (event is OnCantonChange) {
       yield* this._onCantonChange(event);
     }
   }
 
   Stream<FiltroState> _onProvinciaChange(OnProvinciaChange event) async* {
-    yield this.state.copyWith(
-          numProvincia: event.numProvincia,
-          loading: true,
-          error: false,
-        );
+    yield this.state.updateProvince(event.numProvincia);
     try {
       final resultResponse = await this.cneService.getVotes(
-            numProvincia: event.numProvincia,
+            numProvincia: this.state.numProvincia,
             codCanton: this.state.codCanton,
             codCircunscripcion: this.state.codCircunscripcion,
             codDignidad: this.state.codDignidad,
           );
-
-      final newState = this.state.copyWith(
-            numProvincia: event.numProvincia,
-            resultResponse: resultResponse,
-            loading: false,
-            error: false,
-          );
-
-      yield newState;
+      yield this.state.updateResultResponse(resultResponse);
     } catch (e) {
       print(e);
-      yield this.state.copyWith(
-            numProvincia: event.numProvincia,
-            loading: false,
-            error: true,
-            resultResponse: ResultResponse(datos: []),
-          );
+      yield this.state.emptyResultResponseError();
     }
   }
 
   Stream<FiltroState> _onCantonChange(OnCantonChange event) async* {
-    yield this.state.copyWith(
-          codCanton: event.codCanton,
-          loading: true,
-          error: false,
-        );
+    yield this.state.updateCanton(event.codCanton);
     try {
       final resultResponse = await this.cneService.getVotes(
             numProvincia: this.state.numProvincia,
@@ -73,21 +52,11 @@ class FiltroBloc extends Bloc<FiltroEvent, FiltroState> {
             codDignidad: this.state.codDignidad,
           );
 
-      final newState = this.state.copyWith(
-            resultResponse: resultResponse,
-            loading: false,
-            error: false,
-          );
-
+      final newState = this.state.updateResultResponse(resultResponse);
       yield newState;
     } catch (e) {
       print(e);
-      yield this.state.copyWith(
-            numProvincia: event.codCanton,
-            loading: false,
-            error: true,
-            resultResponse: ResultResponse(datos: []),
-      );
+      yield this.state.emptyResultResponseError();
     }
   }
 
@@ -101,20 +70,12 @@ class FiltroBloc extends Bloc<FiltroEvent, FiltroState> {
             codDignidad: this.state.codDignidad,
           );
 
-      final newState = this.state.copyWith(
-            resultResponse: resultResponse,
-            loading: false,
-            error: false,
-          );
+      final newState = this.state.updateResultResponse(resultResponse);
 
       yield newState;
     } catch (e) {
       print(e);
-      yield this.state.copyWith(
-            loading: false,
-            error: true,
-            resultResponse: ResultResponse(datos: []),
-          );
+      yield this.state.emptyResultResponseError();
     }
   }
 }

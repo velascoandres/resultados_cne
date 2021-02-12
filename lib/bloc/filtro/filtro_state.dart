@@ -1,7 +1,5 @@
 part of 'filtro_bloc.dart';
 
-
-
 @immutable
 class FiltroState {
   final int numProvincia;
@@ -13,12 +11,12 @@ class FiltroState {
 
   final ResultResponse resultResponse;
 
-   FiltroState({
-    this.numProvincia =  -1,
+  FiltroState({
+    this.numProvincia = -1,
     this.codCircunscripcion = -1,
     this.codDignidad = 1,
     this.codCanton = -1,
-    this.resultResponse =  const ResultResponse(datos: []),
+    this.resultResponse = const ResultResponse(datos: []),
     this.loading = false,
     this.error = false,
   });
@@ -42,22 +40,76 @@ class FiltroState {
         loading: loading ?? this.loading,
       );
 
+  FiltroState startLoading() {
+    final filtro = FiltroState(
+      numProvincia: this.numProvincia,
+      codCanton: this.codCanton,
+      codCircunscripcion: this.codCircunscripcion,
+      codDignidad: this.codDignidad,
+      loading: true,
+      error: false,
+    );
+    return filtro;
+  }
 
-  FiltroState startLoading(){
-   return  FiltroState(
-     numProvincia: this.numProvincia,
-        codCanton: this.codCanton,
-        codCircunscripcion: this.codCircunscripcion,
-        codDignidad: this.codDignidad,
-        loading: true,
-        error: false,
+  FiltroState stopLoading() {
+    return FiltroState(
+      numProvincia: this.numProvincia,
+      codCanton: this.codCanton,
+      codCircunscripcion: this.codCircunscripcion,
+      codDignidad: this.codDignidad,
+      resultResponse: this.resultResponse,
+      loading: false,
+      error: false,
     );
   }
 
-  FiltroState stopLoading(){
-   return  FiltroState(
-        loading: true,
-        error: false,
+  FiltroState updateProvince(int numProvincia) {
+    return FiltroState(
+      numProvincia: numProvincia,
+      codCanton: this.codCanton,
+      codCircunscripcion: this.codCircunscripcion,
+      codDignidad: this.codDignidad,
+      resultResponse: this.resultResponse,
+      loading: true,
+      error: false,
+    );
+  }
+
+  FiltroState updateCanton(int codCanton) {
+    return FiltroState(
+      numProvincia: this.numProvincia,
+      codCanton: codCanton,
+      codCircunscripcion: this.codCircunscripcion,
+      codDignidad: this.codDignidad,
+      resultResponse: this.resultResponse,
+      loading: true,
+      error: false,
+    );
+  }
+
+
+  FiltroState updateResultResponse(ResultResponse resultResponse) {
+    return FiltroState(
+      numProvincia: this.numProvincia,
+      codCanton: this.codCanton,
+      codCircunscripcion: this.codCircunscripcion,
+      codDignidad: this.codDignidad,
+      resultResponse: resultResponse,
+      loading: false,
+      error: false,
+    );
+  }
+
+  FiltroState emptyResultResponseError() {
+    return FiltroState(
+      numProvincia: this.numProvincia,
+      codCanton: this.codCanton,
+      codCircunscripcion: this.codCircunscripcion,
+      codDignidad: this.codDignidad,
+      resultResponse: ResultResponse(datos: []),
+      loading: false,
+      error: false,
     );
   }
 }
