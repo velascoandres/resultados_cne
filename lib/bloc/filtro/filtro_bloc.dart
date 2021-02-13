@@ -30,7 +30,7 @@ class FiltroBloc extends Bloc<FiltroEvent, FiltroState> {
     yield this.state.updateProvince(event.numProvincia);
     try {
       final resultResponse = await this.cneService.getVotes(
-            numProvincia: this.state.numProvincia,
+            numProvincia: event.numProvincia,
             codCanton: this.state.codCanton,
             codCircunscripcion: this.state.codCircunscripcion,
             codDignidad: this.state.codDignidad,

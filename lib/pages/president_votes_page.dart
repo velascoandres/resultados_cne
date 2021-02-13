@@ -36,7 +36,7 @@ class _PresidentVotesPageState extends State<PresidentVotesPage>
       builder: (context, state) {
         final isLoading = state.loading;
         final datos = state.resultResponse.datos;
-        final isProvinciaSelected = state.numProvincia != -1;
+        // final isProvinciaSelected = state.numProvincia != -1;
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
